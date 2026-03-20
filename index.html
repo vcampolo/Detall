@@ -17,7 +17,7 @@
     .header-icon { font-size: 2rem; }
     header h1 { font-size: 1.15rem; font-weight: 600; }
     header p { font-size: 0.8rem; opacity: 0.85; margin-top: 2px; }
-    .container { max-width: 760px; margin: 2rem auto; padding: 0 1rem; }
+    .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
     .card { background: white; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem; margin-bottom: 1.25rem; }
     .card-title { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 1rem; }
     .upload-zone { border: 2px dashed var(--gris-mid); border-radius: var(--radius); padding: 2.5rem 1rem; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
@@ -31,14 +31,8 @@
     .file-left { display: flex; align-items: center; gap: 10px; overflow: hidden; }
     .file-name { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .file-size { font-size: 0.75rem; color: var(--text-muted); flex-shrink: 0; }
-    .file-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem; padding: 2px 6px; border-radius: 4px; transition: color 0.15s, background 0.15s; flex-shrink: 0; }
+    .file-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem; padding: 2px 6px; border-radius: 4px; transition: color 0.15s; flex-shrink: 0; }
     .file-remove:hover { color: var(--rojo); background: var(--rojo-light); }
-    .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    @media (max-width: 500px) { .check-grid { grid-template-columns: 1fr; } }
-    .check-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1.5px solid var(--gris-mid); border-radius: 8px; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
-    .check-item:has(input:checked) { border-color: var(--rojo); background: var(--rojo-light); }
-    .check-item input { width: 17px; height: 17px; accent-color: var(--rojo); cursor: pointer; flex-shrink: 0; }
-    .check-label { font-size: 0.875rem; font-weight: 500; }
     .btn-procesar { width: 100%; padding: 14px; background: var(--rojo); color: white; border: none; border-radius: var(--radius); font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 10px; }
     .btn-procesar:hover:not(:disabled) { background: var(--rojo-dark); }
     .btn-procesar:active:not(:disabled) { transform: scale(0.99); }
@@ -50,29 +44,40 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .progress-bar { height: 6px; background: var(--gris-mid); border-radius: 999px; margin-top: 10px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--rojo); border-radius: 999px; transition: width 0.4s ease; }
-    .results-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 1rem; }
-    .results-title { font-size: 1rem; font-weight: 600; }
-    .btn-dl { padding: 9px 18px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: background 0.15s, transform 0.1s; border: none; }
-    .btn-dl:active { transform: scale(0.97); }
-    .btn-csv { background: var(--gris-light); color: var(--text); border: 1.5px solid var(--gris-mid); }
-    .btn-csv:hover { background: var(--gris-mid); }
-    .btn-xls { background: var(--verde); color: white; }
-    .btn-xls:hover { background: #0F6E56; }
-    .dl-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
-    .parte-card { background: var(--gris-light); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1rem; border-left: 4px solid var(--rojo); }
-    .parte-filename { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; }
-    .parte-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-    .meta-chip { background: white; border-radius: 6px; padding: 5px 10px; font-size: 0.8rem; border: 1px solid var(--gris-mid); }
-    .meta-chip strong { color: var(--text-muted); font-weight: 500; margin-right: 4px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: white; border-radius: 8px; overflow: hidden; }
-    th { text-align: left; padding: 8px 12px; background: #eee; color: var(--text-muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
-    td { padding: 8px 12px; border-bottom: 1px solid var(--gris-mid); }
-    tr:last-child td { border-bottom: none; }
-    .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
-    .badge-1 { background: #e8f5e9; color: #2e7d32; }
-    .badge-2 { background: #fff8e1; color: #f57f17; }
-    .badge-3 { background: var(--azul-light); color: #1565c0; }
-    .error-card { background: var(--rojo-light); border-radius: 8px; padding: 10px 14px; font-size: 0.85rem; color: var(--rojo-dark); margin-bottom: 8px; }
+
+    /* Preview section */
+    .preview-section { margin-top: 1.5rem; }
+    .preview-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 1rem; }
+    .preview-title { font-size: 1rem; font-weight: 600; }
+    .preview-hint { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+    .btn-export { padding: 10px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border: none; background: var(--verde); color: white; transition: background 0.15s; }
+    .btn-export:hover { background: #0F6E56; }
+
+    .table-wrap { overflow-x: auto; border-radius: var(--radius); box-shadow: var(--shadow); background: white; }
+    table { border-collapse: collapse; font-size: 0.82rem; min-width: 100%; }
+    thead th { position: sticky; top: 0; background: #2c3e50; color: white; padding: 10px 12px; font-weight: 600; white-space: nowrap; text-align: center; border-right: 1px solid #3d5166; z-index: 2; }
+    thead th.col-nombre { text-align: left; min-width: 200px; position: sticky; left: 0; z-index: 3; background: #2c3e50; }
+    tbody tr:nth-child(even) { background: var(--gris-light); }
+    tbody tr:hover { background: #e8f4fd; }
+    tbody td { padding: 7px 10px; border-bottom: 1px solid var(--gris-mid); border-right: 1px solid var(--gris-mid); vertical-align: middle; }
+    tbody td.col-nombre { position: sticky; left: 0; background: inherit; font-weight: 500; min-width: 200px; z-index: 1; }
+    tbody tr:nth-child(even) td.col-nombre { background: var(--gris-light); }
+    tbody tr:hover td.col-nombre { background: #e8f4fd; }
+    .nombre-input { width: 100%; border: none; background: transparent; font-size: 0.82rem; font-weight: 500; color: var(--text); padding: 2px 4px; border-radius: 4px; outline: none; font-family: inherit; }
+    .nombre-input:focus { background: white; box-shadow: 0 0 0 2px var(--rojo); }
+    .num-cell { text-align: center; }
+    .num-select { border: 1px solid var(--gris-mid); border-radius: 6px; padding: 3px 6px; font-size: 0.82rem; font-weight: 600; cursor: pointer; background: white; outline: none; width: 60px; text-align: center; }
+    .num-select:focus { border-color: var(--rojo); }
+    .num-select.v1 { color: #2e7d32; background: #e8f5e9; border-color: #a5d6a7; }
+    .num-select.v2 { color: #f57f17; background: #fff8e1; border-color: #ffcc80; }
+    .num-select.v3 { color: #1565c0; background: var(--azul-light); border-color: #90caf9; }
+    .num-select.v0 { color: var(--text-muted); background: white; }
+
+    .legend { display: flex; gap: 16px; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    .error-card { background: var(--rojo-light); border-radius: 8px; padding: 10px 14px; font-size: 0.85rem; color: var(--rojo-dark); margin-top: 1rem; }
     .error-detail { font-size: 0.75rem; opacity: 0.8; margin-top: 3px; }
   </style>
 </head>
@@ -84,40 +89,41 @@
     <p>Bomberos Voluntarios de Quilmes — Lector de partes</p>
   </div>
 </header>
+
 <div class="container">
   <div class="card">
     <div class="card-title">Archivos del parte</div>
     <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
       <input type="file" id="fileInput" multiple accept="image/*,application/pdf" onchange="handleFiles(this.files)">
       <div class="upload-emoji">📎</div>
-      <div class="upload-title">Tocá para subir el parte</div>
+      <div class="upload-title">Tocá para subir los partes</div>
       <div class="upload-sub">JPG, PNG, PDF — podés subir varios a la vez</div>
     </div>
     <div class="file-list" id="fileList"></div>
   </div>
-  <div class="card">
-    <div class="card-title">Campos a extraer</div>
-    <div class="check-grid">
-      <label class="check-item"><input type="checkbox" id="chk-nro" checked><span class="check-label">N° de parte</span></label>
-      <label class="check-item"><input type="checkbox" id="chk-motivo" checked><span class="check-label">Motivo / carátula</span></label>
-      <label class="check-item"><input type="checkbox" id="chk-fecha" checked><span class="check-label">Fecha</span></label>
-      <label class="check-item"><input type="checkbox" id="chk-acargo" checked><span class="check-label">A cargo</span></label>
-      <label class="check-item" style="grid-column: span 2;"><input type="checkbox" id="chk-bomberos" checked><span class="check-label">Bomberos y tipo de actuación (1 = salió, 2 = en cuartel, 3 = cuartelero)</span></label>
-    </div>
-  </div>
-  <button class="btn-procesar" id="btnProcesar" onclick="procesar()" disabled>🔍 Procesar partes</button>
+
+  <button class="btn-procesar" id="btnProcesar" onclick="procesar()" disabled>
+    🔍 Procesar partes
+  </button>
+
   <div id="statusBox"></div>
-  <div id="resultBox"></div>
+  <div id="errorsBox"></div>
+  <div id="previewBox"></div>
 </div>
+
 <script>
-let files = [], allResults = [];
+let files = [];
+// Matrix: { bomberos: [{nombre}], partes: [{nro, fecha, actuaciones: {nombre: codigo}}] }
+let matrixData = null;
+
 const zone = document.getElementById('uploadZone');
 zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
 zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
 zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
- 
+
 function handleFiles(newFiles) { for (const f of newFiles) files.push(f); renderFileList(); document.getElementById('btnProcesar').disabled = files.length === 0; }
 function formatSize(b) { if (b < 1024) return b + ' B'; if (b < 1048576) return (b/1024).toFixed(1)+' KB'; return (b/1048576).toFixed(1)+' MB'; }
+
 function renderFileList() {
   document.getElementById('fileList').innerHTML = files.map((f,i) => `
     <div class="file-item">
@@ -126,17 +132,7 @@ function renderFileList() {
     </div>`).join('');
 }
 function removeFile(i) { files.splice(i,1); renderFileList(); document.getElementById('btnProcesar').disabled = files.length===0; }
-function getFields() { return { nro: document.getElementById('chk-nro').checked, motivo: document.getElementById('chk-motivo').checked, fecha: document.getElementById('chk-fecha').checked, acargo: document.getElementById('chk-acargo').checked, bomberos: document.getElementById('chk-bomberos').checked }; }
-function buildPrompt(f) {
-  let p = `Sos un asistente especializado en leer partes de personal de bomberos voluntarios argentinos.\nDel parte de personal en la imagen, extraé los datos en formato JSON puro, sin backticks ni texto adicional:\n{`;
-  if (f.nro) p += `\n  "nro_parte": "string o null",`;
-  if (f.motivo) p += `\n  "motivo": "string o null",`;
-  if (f.fecha) p += `\n  "fecha": "string o null",`;
-  if (f.acargo) p += `\n  "a_cargo": "string o null",`;
-  if (f.bomberos) p += `\n  "bomberos": [{"nombre": "Apellido, Nombre", "actuacion": 1, 2 o 3}]`;
-  p += `\n}\nReglas:\n- 1 = Acudió a la intervención (X en el parte)\n- 2 = Estaba en la dependencia, no salió (• en el parte)\n- 3 = Guardia cuartelero (G en el parte)\n- Solo incluir personal con marca. En blanco = no incluir.\n- Incluir sección "Otros" si tienen marca.\nRespondé SOLO con el JSON, sin ningún texto extra.`;
-  return p;
-}
+
 function normalizeType(file) {
   const n = file.name.toLowerCase();
   if (file.type && file.type.startsWith('image/')) return file.type;
@@ -146,113 +142,295 @@ function normalizeType(file) {
   if (n.endsWith('.pdf')) return 'application/pdf';
   return 'image/jpeg';
 }
+
 async function toBase64(file) {
-  return new Promise((res,rej) => { const r = new FileReader(); r.onload = () => res(r.result.split(',')[1]); r.onerror = () => rej(new Error('Error leyendo archivo')); r.readAsDataURL(file); });
+  return new Promise((res,rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = () => rej(new Error('Error leyendo archivo'));
+    r.readAsDataURL(file);
+  });
 }
-function setStatus(html, type) { document.getElementById('statusBox').innerHTML = html ? `<div class="status status-${type}">${html}</div>` : ''; }
- 
+
+function setStatus(html, type) {
+  document.getElementById('statusBox').innerHTML = html ? `<div class="status status-${type}">${html}</div>` : '';
+}
+
+async function callAPI(b64, mediaType, prompt) {
+  const isPDF = mediaType === 'application/pdf';
+  const contentBlock = isPDF
+    ? { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: b64 } }
+    : { type: 'image', source: { type: 'base64', media_type: mediaType, data: b64 } };
+
+  const res = await fetch('/api/procesar', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 4000,
+      messages: [{ role: 'user', content: [contentBlock, { type: 'text', text: prompt }] }]
+    })
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(()=>({}));
+    throw new Error(`API ${res.status}: ${err.error?.message||res.statusText}`);
+  }
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message);
+  const raw = (data.content||[]).map(c=>c.text||'').join('').trim();
+  const clean = raw.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
+  try { return JSON.parse(clean); }
+  catch {
+    const m = clean.match(/\{[\s\S]*\}/);
+    if (m) return JSON.parse(m[0]);
+    throw new Error('No se pudo interpretar la respuesta JSON');
+  }
+}
+
+const PROMPT_PADRON = `Sos un asistente especializado en leer partes de personal de bomberos voluntarios argentinos.
+Del parte en la imagen, extraé DOS cosas en formato JSON puro sin backticks:
+
+{
+  "nro_parte": "string",
+  "fecha": "DD/MM/AAAA",
+  "padron": [
+    {"numero": 1, "nombre": "APELLIDO, Nombre"}
+  ],
+  "actuaciones": [
+    {"nombre": "APELLIDO, Nombre", "codigo": 1}
+  ]
+}
+
+Reglas para "padron": incluí TODOS los bomberos listados en el parte, en orden, con su número de lista (del 1 al fin). Incluí jefes, oficiales, suboficiales, cabos, bomberos y la sección "Otros" (cuarteleros/telefonistas).
+
+Reglas para "actuaciones": solo los que tienen marca:
+- codigo 1 = X (acudió a la intervención)
+- codigo 2 = • (estaba en la dependencia, no salió)
+- codigo 3 = G (guardia cuartelero)
+
+Respondé SOLO con el JSON, sin texto extra.`;
+
+const PROMPT_SOLO_ACTUACIONES = `Sos un asistente especializado en leer partes de personal de bomberos voluntarios argentinos.
+Del parte en la imagen, extraé en formato JSON puro sin backticks:
+
+{
+  "nro_parte": "string",
+  "fecha": "DD/MM/AAAA",
+  "actuaciones": [
+    {"nombre": "APELLIDO, Nombre", "codigo": 1}
+  ]
+}
+
+Reglas:
+- codigo 1 = X (acudió a la intervención)
+- codigo 2 = • (estaba en la dependencia, no salió)
+- codigo 3 = G (guardia cuartelero)
+- Solo incluir quienes tienen marca. En blanco = no incluir.
+
+Respondé SOLO con el JSON, sin texto extra.`;
+
 async function procesar() {
   const btn = document.getElementById('btnProcesar');
-  btn.disabled = true; allResults = []; document.getElementById('resultBox').innerHTML = '';
-  const fields = getFields(), prompt = buildPrompt(fields);
+  btn.disabled = true;
+  matrixData = null;
+  document.getElementById('previewBox').innerHTML = '';
+  document.getElementById('errorsBox').innerHTML = '';
+
+  const results = [];
+  const errors = [];
+  let padron = null;
+
   for (let i = 0; i < files.length; i++) {
-    const f = files[i], pct = Math.round((i/files.length)*100);
-    setStatus(`<div class="spinner"></div><div style="flex:1;">Procesando ${i+1} de ${files.length}: <strong>${f.name}</strong><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div></div>`, 'loading');
+    const f = files[i];
+    const pct = Math.round((i / files.length) * 100);
+    setStatus(`
+      <div class="spinner"></div>
+      <div style="flex:1;">
+        Procesando ${i+1} de ${files.length}: <strong>${f.name}</strong>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      </div>
+    `, 'loading');
+
     try {
-      const b64 = await toBase64(f), mediaType = normalizeType(f), isPDF = mediaType === 'application/pdf';
-      const contentBlock = isPDF
-        ? { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: b64 } }
-        : { type: 'image', source: { type: 'base64', media_type: mediaType, data: b64 } };
-      const res = await fetch('/api/procesar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 2000, messages: [{ role: 'user', content: [contentBlock, { type: 'text', text: prompt }] }] })
+      const b64 = await toBase64(f);
+      const mediaType = normalizeType(f);
+      const prompt = (i === 0) ? PROMPT_PADRON : PROMPT_SOLO_ACTUACIONES;
+      const parsed = await callAPI(b64, mediaType, prompt);
+
+      if (i === 0 && parsed.padron && parsed.padron.length > 0) {
+        padron = parsed.padron;
+      }
+
+      results.push({
+        nro_parte: parsed.nro_parte || `Parte ${i+1}`,
+        fecha: parsed.fecha || '',
+        actuaciones: parsed.actuaciones || []
       });
-      if (!res.ok) { const err = await res.json().catch(()=>({})); throw new Error(`API ${res.status}: ${err.error?.message||res.statusText}`); }
-      const data = await res.json();
-      if (data.error) throw new Error(data.error.message);
-      const raw = (data.content||[]).map(c=>c.text||'').join('').trim();
-      const clean = raw.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
-      let parsed;
-      try { parsed = JSON.parse(clean); } catch { const m = clean.match(/\{[\s\S]*\}/); if (m) parsed = JSON.parse(m[0]); else throw new Error('No se pudo interpretar la respuesta'); }
-      parsed._filename = f.name;
-      allResults.push({ ok: true, data: parsed });
-    } catch(e) { allResults.push({ ok: false, filename: f.name, error: e.message }); }
-  }
-  setStatus('',''); btn.disabled = false; renderResults(fields);
-}
- 
-function renderResults(fields) {
-  const ok = allResults.filter(r=>r.ok), fail = allResults.filter(r=>!r.ok);
-  let html = '<div style="margin-top:1.5rem;">';
-  for (const f of fail) html += `<div class="error-card">⚠️ <strong>${f.filename}</strong><div class="error-detail">${f.error}</div></div>`;
-  if (ok.length > 0) {
-    html += `<div class="results-header"><span class="results-title">${ok.length} parte${ok.length>1?'s':''} procesado${ok.length>1?'s':''} ✓</span><div class="dl-buttons"><button class="btn-dl btn-csv" onclick="descargarCSV()">⬇ CSV</button><button class="btn-dl btn-xls" onclick="descargarXLS()">⬇ Excel</button></div></div>`;
-    for (const r of ok) {
-      const d = r.data;
-      html += `<div class="parte-card"><div class="parte-filename">📎 ${d._filename}</div><div class="parte-meta">`;
-      if (fields.nro && d.nro_parte) html += `<div class="meta-chip"><strong>N°</strong>${d.nro_parte}</div>`;
-      if (fields.motivo && d.motivo) html += `<div class="meta-chip"><strong>Motivo</strong>${d.motivo}</div>`;
-      if (fields.fecha && d.fecha) html += `<div class="meta-chip"><strong>Fecha</strong>${d.fecha}</div>`;
-      if (fields.acargo && d.a_cargo) html += `<div class="meta-chip"><strong>A cargo</strong>${d.a_cargo}</div>`;
-      html += `</div>`;
-      if (fields.bomberos && d.bomberos && d.bomberos.length > 0) {
-        html += `<table><thead><tr><th>#</th><th>Bombero</th><th>Actuación</th></tr></thead><tbody>`;
-        d.bomberos.forEach((b,i) => { const labels={1:'Salió (1)',2:'En cuartel (2)',3:'Cuartelero (3)'}; html += `<tr><td style="color:var(--text-muted);width:36px;">${i+1}</td><td>${b.nombre}</td><td><span class="badge badge-${b.actuacion}">${labels[b.actuacion]||b.actuacion}</span></td></tr>`; });
-        html += `</tbody></table>`;
-      }
-      html += `</div>`;
+
+    } catch(e) {
+      errors.push({ filename: f.name, error: e.message });
     }
   }
-  html += '</div>';
-  document.getElementById('resultBox').innerHTML = html;
-}
- 
-function buildRows(fields) {
-  const headers = [];
-  if (fields.nro) headers.push('N° parte');
-  if (fields.motivo) headers.push('Motivo');
-  if (fields.fecha) headers.push('Fecha');
-  if (fields.acargo) headers.push('A cargo');
-  if (fields.bomberos) { headers.push('Bombero'); headers.push('Actuación'); }
-  const rows = [];
-  for (const r of allResults.filter(r=>r.ok)) {
-    const d = r.data;
-    if (fields.bomberos && d.bomberos && d.bomberos.length > 0) {
-      for (const b of d.bomberos) {
-        const row = {};
-        if (fields.nro) row['N° parte'] = d.nro_parte||'';
-        if (fields.motivo) row['Motivo'] = d.motivo||'';
-        if (fields.fecha) row['Fecha'] = d.fecha||'';
-        if (fields.acargo) row['A cargo'] = d.a_cargo||'';
-        row['Bombero'] = b.nombre; row['Actuación'] = b.actuacion;
-        rows.push(row);
-      }
-    } else {
-      const row = {};
-      if (fields.nro) row['N° parte'] = d.nro_parte||'';
-      if (fields.motivo) row['Motivo'] = d.motivo||'';
-      if (fields.fecha) row['Fecha'] = d.fecha||'';
-      if (fields.acargo) row['A cargo'] = d.a_cargo||'';
-      rows.push(row);
-    }
+
+  setStatus('', '');
+  btn.disabled = false;
+
+  if (errors.length > 0) {
+    document.getElementById('errorsBox').innerHTML = errors.map(e => `
+      <div class="error-card">⚠️ <strong>${e.filename}</strong><div class="error-detail">${e.error}</div></div>
+    `).join('');
   }
-  return { headers, rows };
+
+  if (results.length > 0 && padron) {
+    matrixData = { padron, partes: results };
+    renderPreview();
+  } else if (results.length > 0 && !padron) {
+    document.getElementById('errorsBox').innerHTML += `<div class="error-card">⚠️ No se pudo leer el padrón del primer parte. Intentá procesar nuevamente.</div>`;
+  }
 }
- 
-function descargarCSV() {
-  const fields = getFields(), { headers, rows } = buildRows(fields);
-  const csv = [headers, ...rows.map(r=>headers.map(h=>r[h]!==undefined?r[h]:''))].map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'})); a.download='partes_bomberos.csv'; a.click();
+
+function colKey(parte) {
+  return `${parte.nro_parte}__${parte.fecha}`;
 }
- 
-function descargarXLS() {
-  const fields = getFields(), { headers, rows } = buildRows(fields);
-  let xml = `<?xml version="1.0"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><Worksheet ss:Name="Partes"><Table>`;
-  xml += '<Row>'+headers.map(h=>`<Cell><Data ss:Type="String">${h}</Data></Cell>`).join('')+'</Row>';
-  for (const r of rows) xml += '<Row>'+headers.map(h=>{ const v=r[h]!==undefined?r[h]:'',t=typeof v==='number'?'Number':'String'; return `<Cell><Data ss:Type="${t}">${String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</Data></Cell>`; }).join('')+'</Row>';
+
+function renderPreview() {
+  if (!matrixData) return;
+  const { padron, partes } = matrixData;
+
+  // Build lookup: nombre -> codigo per parte
+  const lookup = {}; // lookup[nombre][colKey] = codigo
+  partes.forEach(p => {
+    const key = colKey(p);
+    (p.actuaciones || []).forEach(a => {
+      const nombre = a.nombre.toUpperCase().trim();
+      if (!lookup[nombre]) lookup[nombre] = {};
+      lookup[nombre][key] = a.codigo;
+    });
+  });
+
+  const colKeys = partes.map(colKey);
+
+  let html = `
+    <div class="preview-section">
+      <div class="preview-header">
+        <div>
+          <div class="preview-title">Previsualización — ${padron.length} bomberos · ${partes.length} parte${partes.length>1?'s':''}</div>
+          <div class="preview-hint">Podés editar los nombres y cambiar los valores antes de exportar.</div>
+        </div>
+        <button class="btn-export" onclick="exportarExcel()">⬇ Exportar Excel</button>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#2e7d32"></div> 1 = Salió a la intervención</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f57f17"></div> 2 = En la dependencia</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#1565c0"></div> 3 = Guardia cuartelero</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ccc"></div> vacío = no estaba</div>
+      </div>
+
+      <div class="table-wrap">
+        <table id="matrixTable">
+          <thead>
+            <tr>
+              <th class="col-nombre">Bombero</th>
+              ${partes.map(p => `<th class="parte-col">${p.nro_parte}<br><span style="font-weight:400;font-size:0.72rem;opacity:0.8;">${p.fecha}</span></th>`).join('')}
+            </tr>
+          </thead>
+          <tbody>
+            ${padron.map((b, bi) => {
+              const nombreUpper = b.nombre.toUpperCase().trim();
+              const celdas = colKeys.map((ck, ci) => {
+                const val = lookup[nombreUpper] ? (lookup[nombreUpper][ck] || 0) : 0;
+                const cls = val > 0 ? `v${val}` : 'v0';
+                return `<td class="num-cell">
+                  <select class="num-select ${cls}" data-row="${bi}" data-col="${ci}" onchange="onSelectChange(this)">
+                    <option value="0" ${val===0?'selected':''}>—</option>
+                    <option value="1" ${val===1?'selected':''}>1</option>
+                    <option value="2" ${val===2?'selected':''}>2</option>
+                    <option value="3" ${val===3?'selected':''}>3</option>
+                  </select>
+                </td>`;
+              }).join('');
+              return `<tr>
+                <td class="col-nombre">
+                  <input class="nombre-input" type="text" value="${b.nombre}" data-row="${bi}" onchange="onNombreChange(this)">
+                </td>
+                ${celdas}
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('previewBox').innerHTML = html;
+}
+
+function onSelectChange(sel) {
+  const val = parseInt(sel.value);
+  sel.className = `num-select ${val > 0 ? 'v'+val : 'v0'}`;
+  const bi = parseInt(sel.dataset.row);
+  const ci = parseInt(sel.dataset.col);
+  matrixData.partes[ci].actuaciones = matrixData.partes[ci].actuaciones || [];
+  const nombre = matrixData.padron[bi].nombre;
+  const nombreUpper = nombre.toUpperCase().trim();
+  const existing = matrixData.partes[ci].actuaciones.findIndex(a => a.nombre.toUpperCase().trim() === nombreUpper);
+  if (val === 0) {
+    if (existing >= 0) matrixData.partes[ci].actuaciones.splice(existing, 1);
+  } else {
+    if (existing >= 0) matrixData.partes[ci].actuaciones[existing].codigo = val;
+    else matrixData.partes[ci].actuaciones.push({ nombre, codigo: val });
+  }
+}
+
+function onNombreChange(input) {
+  const bi = parseInt(input.dataset.row);
+  matrixData.padron[bi].nombre = input.value;
+}
+
+function exportarExcel() {
+  if (!matrixData) return;
+  const { padron, partes } = matrixData;
+
+  // Headers
+  const headers = ['Bombero', ...partes.map(p => `${p.nro_parte} — ${p.fecha}`)];
+
+  // Lookup from current DOM selects
+  const table = document.getElementById('matrixTable');
+  const rows = table.querySelectorAll('tbody tr');
+
+  let xml = `<?xml version="1.0"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><Worksheet ss:Name="Personal Actuante"><Table>`;
+
+  // Header row
+  xml += '<Row>' + headers.map(h => `<Cell><Data ss:Type="String">${esc(h)}</Data></Cell>`).join('') + '</Row>';
+
+  // Data rows
+  rows.forEach((tr, bi) => {
+    const nombreInput = tr.querySelector('.nombre-input');
+    const nombre = nombreInput ? nombreInput.value : padron[bi].nombre;
+    const selects = tr.querySelectorAll('.num-select');
+    xml += '<Row>';
+    xml += `<Cell><Data ss:Type="String">${esc(nombre)}</Data></Cell>`;
+    selects.forEach(sel => {
+      const v = parseInt(sel.value);
+      if (v > 0) xml += `<Cell><Data ss:Type="Number">${v}</Data></Cell>`;
+      else xml += `<Cell><Data ss:Type="String"></Data></Cell>`;
+    });
+    xml += '</Row>';
+  });
+
   xml += '</Table></Worksheet></Workbook>';
-  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([xml],{type:'application/vnd.ms-excel'})); a.download='partes_bomberos.xls'; a.click();
+
+  const blob = new Blob([xml], { type: 'application/vnd.ms-excel' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'personal_actuante.xls';
+  a.click();
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 </script>
 </body>

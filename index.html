@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detall — Bomberos Voluntarios de Quilmes</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --rojo: #c0392b;
+      --rojo-dark: #96281b;
+      --rojo-light: #fadbd8;
+      --gris-light: #f4f6f8;
+      --gris-mid: #dde1e7;
+      --verde: #1D9E75;
+      --azul-light: #eaf4fd;
+      --text: #1a1a2e;
+      --text-muted: #6b7280;
+      --radius: 10px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      background: var(--rojo);
+      color: white;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .header-icon { font-size: 2rem; }
+    header h1 { font-size: 1.15rem; font-weight: 600; }
+    header p { font-size: 0.8rem; opacity: 0.85; margin-top: 2px; }
+    .container { max-width: 760px; margin: 2rem auto; padding: 0 1rem; }
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .card-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .upload-zone {
+      border: 2px dashed var(--gris-mid);
+      border-radius: var(--radius);
+      padding: 2.5rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .upload-zone:hover, .upload-zone.drag-over { border-color: var(--rojo); background: var(--rojo-light); }
+    .upload-zone input { display: none; }
+    .upload-emoji { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .upload-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .upload-sub { font-size: 0.85rem; color: var(--text-muted); }
+    .file-list { margin-top: 1rem; display: flex; flex-direction: column; gap: 8px; }
+    .file-item {
+      background: var(--gris-light);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.875rem;
+    }
+    .file-left { display: flex; align-items: center; gap: 10px; overflow: hidden; }
+    .file-name { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .file-size { font-size: 0.75rem; color: var(--text-muted); flex-shrink: 0; }
+    .file-remove {
+      background: none; border: none; color: var(--text-muted);
+      cursor: pointer; font-size: 1.1rem; padding: 2px 6px;
+      border-radius: 4px; transition: color 0.15s, background 0.15s; flex-shrink: 0;
+    }
+    .file-remove:hover { color: var(--rojo); background: var(--rojo-light); }
+    .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 500px) { .check-grid { grid-template-columns: 1fr; } }
+    .check-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      border: 1.5px solid var(--gris-mid);
+      border-radius: 8px; cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .check-item:has(input:checked) { border-color: var(--rojo); background: var(--rojo-light); }
+    .check-item input { width: 17px; height: 17px; accent-color: var(--rojo); cursor: pointer; flex-shrink: 0; }
+    .check-label { font-size: 0.875rem; font-weight: 500; }
+    .btn-procesar {
+      width: 100%; padding: 14px;
+      background: var(--rojo); color: white;
+      border: none; border-radius: var(--radius);
+      font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s, transform 0.1s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-procesar:hover:not(:disabled) { background: var(--rojo-dark); }
+    .btn-procesar:active:not(:disabled) { transform: scale(0.99); }
+    .btn-procesar:disabled { background: var(--gris-mid); color: var(--text-muted); cursor: not-allowed; }
+    .status {
+      padding: 12px 16px; border-radius: 8px;
+      font-size: 0.875rem; margin-top: 1rem;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .status-loading { background: var(--azul-light); color: #1565c0; }
+    .status-error { background: var(--rojo-light); color: var(--rojo-dark); }
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid currentColor; border-top-color: transparent;
+      border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; margin-top: 1px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .progress-bar { height: 6px; background: var(--gris-mid); border-radius: 999px; margin-top: 10px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--rojo); border-radius: 999px; transition: width 0.4s ease; }
+    .results-header {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px; margin-bottom: 1rem;
+    }
+    .results-title { font-size: 1rem; font-weight: 600; }
+    .btn-dl {
+      padding: 9px 18px; border-radius: 8px;
+      font-size: 0.875rem; font-weight: 600; cursor: pointer;
+      transition: background 0.15s, transform 0.1s; border: none;
+    }
+    .btn-dl:active { transform: scale(0.97); }
+    .btn-csv { background: var(--gris-light); color: var(--text); border: 1.5px solid var(--gris-mid); }
+    .btn-csv:hover { background: var(--gris-mid); }
+    .btn-xls { background: var(--verde); color: white; }
+    .btn-xls:hover { background: #0F6E56; }
+    .dl-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+    .parte-card {
+      background: var(--gris-light); border-radius: var(--radius);
+      padding: 1.25rem; margin-bottom: 1rem;
+      border-left: 4px solid var(--rojo);
+    }
+    .parte-filename { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; }
+    .parte-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .meta-chip {
+      background: white; border-radius: 6px;
+      padding: 5px 10px; font-size: 0.8rem;
+      border: 1px solid var(--gris-mid);
+    }
+    .meta-chip strong { color: var(--text-muted); font-weight: 500; margin-right: 4px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: white; border-radius: 8px; overflow: hidden; }
+    th { text-align: left; padding: 8px 12px; background: #eee; color: var(--text-muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 8px 12px; border-bottom: 1px solid var(--gris-mid); }
+    tr:last-child td { border-bottom: none; }
+    .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+    .badge-1 { background: #e8f5e9; color: #2e7d32; }
+    .badge-2 { background: #fff8e1; color: #f57f17; }
+    .badge-3 { background: var(--azul-light); color: #1565c0; }
+    .error-card {
+      background: var(--rojo-light); border-radius: 8px;
+      padding: 10px 14px; font-size: 0.85rem; color: var(--rojo-dark); margin-bottom: 8px;
+    }
+    .error-detail { font-size: 0.75rem; opacity: 0.8; margin-top: 3px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🚒</div>
+  <div>
+    <h1>Detall</h1>
+    <p>Bomberos Voluntarios de Quilmes — Lector de partes</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <div class="card-title">Archivos del parte</div>
+    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+      <input type="file" id="fileInput" multiple accept="image/*,application/pdf" onchange="handleFiles(this.files)">
+      <div class="upload-emoji">📎</div>
+      <div class="upload-title">Tocá para subir el parte</div>
+      <div class="upload-sub">JPG, PNG, PDF — podés subir varios a la vez</div>
+    </div>
+    <div class="file-list" id="fileList"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Campos a extraer</div>
+    <div class="check-grid">
+      <label class="check-item"><input type="checkbox" id="chk-nro" checked><span class="check-label">N° de parte</span></label>
+      <label class="check-item"><input type="checkbox" id="chk-motivo" checked><span class="check-label">Motivo / carátula</span></label>
+      <label class="check-item"><input type="checkbox" id="chk-fecha" checked><span class="check-label">Fecha</span></label>
+      <label class="check-item"><input type="checkbox" id="chk-acargo" checked><span class="check-label">A cargo</span></label>
+      <label class="check-item" style="grid-column: span 2;"><input type="checkbox" id="chk-bomberos" checked><span class="check-label">Bomberos y tipo de actuación (1 = salió, 2 = en cuartel, 3 = cuartelero)</span></label>
+    </div>
+  </div>
+
+  <button class="btn-procesar" id="btnProcesar" onclick="procesar()" disabled>
+    🔍 Procesar partes
+  </button>
+
+  <div id="statusBox"></div>
+  <div id="resultBox"></div>
+
+</div>
+
+<script>
+const API_KEY = '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';
+
+let files = [];
+let allResults = [];
+
+const zone = document.getElementById('uploadZone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+zone.addEventListener('drop', e => {
+  e.preventDefault(); zone.classList.remove('drag-over');
+  handleFiles(e.dataTransfer.files);
+});
+
+function handleFiles(newFiles) {
+  for (const f of newFiles) files.push(f);
+  renderFileList();
+  document.getElementById('btnProcesar').disabled = files.length === 0;
+}
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / 1048576).toFixed(1) + ' MB';
+}
+
+function renderFileList() {
+  const list = document.getElementById('fileList');
+  list.innerHTML = files.map((f, i) => `
+    <div class="file-item">
+      <div class="file-left">
+        <span>${f.type.includes('pdf') ? '📄' : '🖼️'}</span>
+        <span class="file-name">${f.name}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="file-size">${formatSize(f.size)}</span>
+        <button class="file-remove" onclick="removeFile(${i})">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function removeFile(i) {
+  files.splice(i, 1);
+  renderFileList();
+  document.getElementById('btnProcesar').disabled = files.length === 0;
+}
+
+function getFields() {
+  return {
+    nro: document.getElementById('chk-nro').checked,
+    motivo: document.getElementById('chk-motivo').checked,
+    fecha: document.getElementById('chk-fecha').checked,
+    acargo: document.getElementById('chk-acargo').checked,
+    bomberos: document.getElementById('chk-bomberos').checked,
+  };
+}
+
+function buildPrompt(fields) {
+  let p = `Sos un asistente especializado en leer partes de personal de bomberos voluntarios argentinos.
+Del parte de personal en la imagen, extraé los datos en formato JSON puro, sin backticks ni texto adicional:\n{`;
+  if (fields.nro) p += `\n  "nro_parte": "string o null",`;
+  if (fields.motivo) p += `\n  "motivo": "string o null",`;
+  if (fields.fecha) p += `\n  "fecha": "string o null",`;
+  if (fields.acargo) p += `\n  "a_cargo": "string o null",`;
+  if (fields.bomberos) p += `\n  "bomberos": [{"nombre": "Apellido, Nombre", "actuacion": 1, 2 o 3}]`;
+  p += `\n}
+Reglas:
+- 1 = Acudió a la intervención (X en el parte)
+- 2 = Estaba en la dependencia, no salió (• en el parte)
+- 3 = Guardia cuartelero (G en el parte)
+- Solo incluir personal con marca. En blanco = no incluir.
+- Incluir sección "Otros" (cuarteleros/telefonistas) si tienen marca.
+Respondé SOLO con el JSON, sin ningún texto extra.`;
+  return p;
+}
+
+function normalizeType(file) {
+  const n = file.name.toLowerCase();
+  if (file.type && file.type.startsWith('image/')) return file.type;
+  if (n.endsWith('.jpg') || n.endsWith('.jpeg')) return 'image/jpeg';
+  if (n.endsWith('.png')) return 'image/png';
+  if (n.endsWith('.gif')) return 'image/gif';
+  if (n.endsWith('.webp')) return 'image/webp';
+  if (n.endsWith('.pdf')) return 'application/pdf';
+  return 'image/jpeg';
+}
+
+async function toBase64(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = () => rej(new Error('Error leyendo archivo'));
+    r.readAsDataURL(file);
+  });
+}
+
+function setStatus(html, type) {
+  const box = document.getElementById('statusBox');
+  box.innerHTML = html ? `<div class="status status-${type}">${html}</div>` : '';
+}
+
+async function procesar() {
+  const btn = document.getElementById('btnProcesar');
+  btn.disabled = true;
+  allResults = [];
+  document.getElementById('resultBox').innerHTML = '';
+
+  const fields = getFields();
+  const prompt = buildPrompt(fields);
+
+  for (let i = 0; i < files.length; i++) {
+    const f = files[i];
+    const pct = Math.round((i / files.length) * 100);
+    setStatus(`
+      <div class="spinner"></div>
+      <div style="flex:1;">
+        Procesando ${i + 1} de ${files.length}: <strong>${f.name}</strong>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      </div>
+    `, 'loading');
+
+    try {
+      const b64 = await toBase64(f);
+      const mediaType = normalizeType(f);
+      const isPDF = mediaType === 'application/pdf';
+
+      const contentBlock = isPDF
+        ? { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: b64 } }
+        : { type: 'image', source: { type: 'base64', media_type: mediaType, data: b64 } };
+
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': API_KEY,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 2000,
+          messages: [{ role: 'user', content: [contentBlock, { type: 'text', text: prompt }] }]
+        })
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(`API ${res.status}: ${err.error?.message || res.statusText}`);
+      }
+
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+
+      const raw = (data.content || []).map(c => c.text || '').join('').trim();
+      const clean = raw.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+
+      let parsed;
+      try {
+        parsed = JSON.parse(clean);
+      } catch {
+        const match = clean.match(/\{[\s\S]*\}/);
+        if (match) parsed = JSON.parse(match[0]);
+        else throw new Error('No se pudo interpretar la respuesta');
+      }
+
+      parsed._filename = f.name;
+      allResults.push({ ok: true, data: parsed });
+
+    } catch (e) {
+      allResults.push({ ok: false, filename: f.name, error: e.message });
+    }
+  }
+
+  setStatus('', '');
+  btn.disabled = false;
+  renderResults(fields);
+}
+
+function renderResults(fields) {
+  const box = document.getElementById('resultBox');
+  const ok = allResults.filter(r => r.ok);
+  const fail = allResults.filter(r => !r.ok);
+
+  let html = '<div style="margin-top:1.5rem;">';
+
+  for (const f of fail) {
+    html += `<div class="error-card">
+      ⚠️ <strong>${f.filename}</strong>
+      <div class="error-detail">${f.error}</div>
+    </div>`;
+  }
+
+  if (ok.length > 0) {
+    html += `<div class="results-header">
+      <span class="results-title">${ok.length} parte${ok.length > 1 ? 's' : ''} procesado${ok.length > 1 ? 's' : ''} ✓</span>
+      <div class="dl-buttons">
+        <button class="btn-dl btn-csv" onclick="descargarCSV()">⬇ CSV</button>
+        <button class="btn-dl btn-xls" onclick="descargarXLS()">⬇ Excel</button>
+      </div>
+    </div>`;
+
+    for (const r of ok) {
+      const d = r.data;
+      html += `<div class="parte-card">
+        <div class="parte-filename">📎 ${d._filename}</div>
+        <div class="parte-meta">`;
+      if (fields.nro && d.nro_parte) html += `<div class="meta-chip"><strong>N°</strong>${d.nro_parte}</div>`;
+      if (fields.motivo && d.motivo) html += `<div class="meta-chip"><strong>Motivo</strong>${d.motivo}</div>`;
+      if (fields.fecha && d.fecha) html += `<div class="meta-chip"><strong>Fecha</strong>${d.fecha}</div>`;
+      if (fields.acargo && d.a_cargo) html += `<div class="meta-chip"><strong>A cargo</strong>${d.a_cargo}</div>`;
+      html += `</div>`;
+
+      if (fields.bomberos && d.bomberos && d.bomberos.length > 0) {
+        html += `<table><thead><tr><th>#</th><th>Bombero</th><th>Actuación</th></tr></thead><tbody>`;
+        d.bomberos.forEach((b, i) => {
+          const labels = { 1: 'Salió (1)', 2: 'En cuartel (2)', 3: 'Cuartelero (3)' };
+          html += `<tr>
+            <td style="color:var(--text-muted);width:36px;">${i + 1}</td>
+            <td>${b.nombre}</td>
+            <td><span class="badge badge-${b.actuacion}">${labels[b.actuacion] || b.actuacion}</span></td>
+          </tr>`;
+        });
+        html += `</tbody></table>`;
+      }
+      html += `</div>`;
+    }
+  }
+
+  html += '</div>';
+  box.innerHTML = html;
+}
+
+function buildRows(fields) {
+  const headers = [];
+  if (fields.nro) headers.push('N° parte');
+  if (fields.motivo) headers.push('Motivo');
+  if (fields.fecha) headers.push('Fecha');
+  if (fields.acargo) headers.push('A cargo');
+  if (fields.bomberos) { headers.push('Bombero'); headers.push('Actuación'); }
+
+  const rows = [];
+  for (const r of allResults.filter(r => r.ok)) {
+    const d = r.data;
+    if (fields.bomberos && d.bomberos && d.bomberos.length > 0) {
+      for (const b of d.bomberos) {
+        const row = {};
+        if (fields.nro) row['N° parte'] = d.nro_parte || '';
+        if (fields.motivo) row['Motivo'] = d.motivo || '';
+        if (fields.fecha) row['Fecha'] = d.fecha || '';
+        if (fields.acargo) row['A cargo'] = d.a_cargo || '';
+        row['Bombero'] = b.nombre;
+        row['Actuación'] = b.actuacion;
+        rows.push(row);
+      }
+    } else {
+      const row = {};
+      if (fields.nro) row['N° parte'] = d.nro_parte || '';
+      if (fields.motivo) row['Motivo'] = d.motivo || '';
+      if (fields.fecha) row['Fecha'] = d.fecha || '';
+      if (fields.acargo) row['A cargo'] = d.a_cargo || '';
+      rows.push(row);
+    }
+  }
+  return { headers, rows };
+}
+
+function descargarCSV() {
+  const fields = getFields();
+  const { headers, rows } = buildRows(fields);
+  const lines = [headers, ...rows.map(r => headers.map(h => r[h] !== undefined ? r[h] : ''))];
+  const csv = lines.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'partes_bomberos.csv';
+  a.click();
+}
+
+function descargarXLS() {
+  const fields = getFields();
+  const { headers, rows } = buildRows(fields);
+  let xml = `<?xml version="1.0"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><Worksheet ss:Name="Partes"><Table>`;
+  xml += '<Row>' + headers.map(h => `<Cell><Data ss:Type="String">${h}</Data></Cell>`).join('') + '</Row>';
+  for (const r of rows) {
+    xml += '<Row>' + headers.map(h => {
+      const v = r[h] !== undefined ? r[h] : '';
+      const t = typeof v === 'number' ? 'Number' : 'String';
+      return `<Cell><Data ss:Type="${t}">${String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</Data></Cell>`;
+    }).join('') + '</Row>';
+  }
+  xml += '</Table></Worksheet></Workbook>';
+  const blob = new Blob([xml], { type: 'application/vnd.ms-excel' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'partes_bomberos.xls';
+  a.click();
+}
+</script>
+
+</body>
+</html>

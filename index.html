@@ -17,7 +17,7 @@
     .header-icon { font-size: 2rem; }
     header h1 { font-size: 1.15rem; font-weight: 600; }
     header p { font-size: 0.8rem; opacity: 0.85; margin-top: 2px; }
-    .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+    .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
     .card { background: white; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem; margin-bottom: 1.25rem; }
     .card-title { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 1rem; }
     .upload-zone { border: 2px dashed var(--gris-mid); border-radius: var(--radius); padding: 2.5rem 1rem; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
@@ -44,41 +44,36 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .progress-bar { height: 6px; background: var(--gris-mid); border-radius: 999px; margin-top: 10px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--rojo); border-radius: 999px; transition: width 0.4s ease; }
-
-    /* Preview section */
     .preview-section { margin-top: 1.5rem; }
-    .preview-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 1rem; }
+    .preview-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 0.75rem; }
     .preview-title { font-size: 1rem; font-weight: 600; }
     .preview-hint { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
     .btn-export { padding: 10px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border: none; background: var(--verde); color: white; transition: background 0.15s; }
     .btn-export:hover { background: #0F6E56; }
-
-    .table-wrap { overflow-x: auto; border-radius: var(--radius); box-shadow: var(--shadow); background: white; }
+    .table-wrap { overflow-x: auto; border-radius: var(--radius); box-shadow: var(--shadow); background: white; max-height: 70vh; overflow-y: auto; }
     table { border-collapse: collapse; font-size: 0.82rem; min-width: 100%; }
     thead th { position: sticky; top: 0; background: #2c3e50; color: white; padding: 10px 12px; font-weight: 600; white-space: nowrap; text-align: center; border-right: 1px solid #3d5166; z-index: 2; }
-    thead th.col-nombre { text-align: left; min-width: 200px; position: sticky; left: 0; z-index: 3; background: #2c3e50; }
+    thead th.col-num { width: 40px; text-align: center; }
+    thead th.col-nombre { text-align: left; min-width: 220px; position: sticky; left: 0; z-index: 3; background: #2c3e50; }
     tbody tr:nth-child(even) { background: var(--gris-light); }
     tbody tr:hover { background: #e8f4fd; }
-    tbody td { padding: 7px 10px; border-bottom: 1px solid var(--gris-mid); border-right: 1px solid var(--gris-mid); vertical-align: middle; }
-    tbody td.col-nombre { position: sticky; left: 0; background: inherit; font-weight: 500; min-width: 200px; z-index: 1; }
+    tbody td { padding: 6px 10px; border-bottom: 1px solid var(--gris-mid); border-right: 1px solid var(--gris-mid); vertical-align: middle; }
+    tbody td.col-num { text-align: center; color: var(--text-muted); font-size: 0.75rem; }
+    tbody td.col-nombre { position: sticky; left: 0; background: inherit; font-weight: 500; min-width: 220px; z-index: 1; }
     tbody tr:nth-child(even) td.col-nombre { background: var(--gris-light); }
     tbody tr:hover td.col-nombre { background: #e8f4fd; }
-    .nombre-input { width: 100%; border: none; background: transparent; font-size: 0.82rem; font-weight: 500; color: var(--text); padding: 2px 4px; border-radius: 4px; outline: none; font-family: inherit; }
-    .nombre-input:focus { background: white; box-shadow: 0 0 0 2px var(--rojo); }
-    .num-cell { text-align: center; }
-    .num-select { border: 1px solid var(--gris-mid); border-radius: 6px; padding: 3px 6px; font-size: 0.82rem; font-weight: 600; cursor: pointer; background: white; outline: none; width: 60px; text-align: center; }
+    .num-select { border: 1px solid var(--gris-mid); border-radius: 6px; padding: 3px 4px; font-size: 0.82rem; font-weight: 600; cursor: pointer; background: white; outline: none; width: 56px; text-align: center; }
     .num-select:focus { border-color: var(--rojo); }
     .num-select.v1 { color: #2e7d32; background: #e8f5e9; border-color: #a5d6a7; }
     .num-select.v2 { color: #f57f17; background: #fff8e1; border-color: #ffcc80; }
     .num-select.v3 { color: #1565c0; background: var(--azul-light); border-color: #90caf9; }
     .num-select.v0 { color: var(--text-muted); background: white; }
-
-    .legend { display: flex; gap: 16px; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; flex-wrap: wrap; }
+    .legend { display: flex; gap: 16px; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; flex-wrap: wrap; }
     .legend-item { display: flex; align-items: center; gap: 6px; }
-    .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
     .error-card { background: var(--rojo-light); border-radius: 8px; padding: 10px 14px; font-size: 0.85rem; color: var(--rojo-dark); margin-top: 1rem; }
     .error-detail { font-size: 0.75rem; opacity: 0.8; margin-top: 3px; }
+    .sector-row td { background: #eef2f7 !important; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); padding: 4px 10px; }
   </style>
 </head>
 <body>
@@ -112,9 +107,158 @@
 </div>
 
 <script>
+// ============================================================
+// PADRÓN FIJO — Bomberos Voluntarios de Quilmes
+// ============================================================
+const PADRON = [
+  {num:1,  nombre:"CHELASCO, Fabián Horacio",          sector:"Jefe del Cuerpo Activo"},
+  {num:2,  nombre:"GUTIERREZ, Jorge Gregorio",          sector:"2° Jefe del Cuerpo Activo"},
+  {num:3,  nombre:"PEREIRAS, Gerardo",                  sector:"Oficiales Jefes"},
+  {num:4,  nombre:"DI MAIO, Leonardo",                  sector:"Oficiales Subalternos"},
+  {num:5,  nombre:"PATELLI, Leonardo Pablo",            sector:"Oficiales Subalternos"},
+  {num:6,  nombre:"GARCIA, Federico Norberto",          sector:"Oficiales Subalternos"},
+  {num:7,  nombre:"OBREGON, Oscar",                     sector:"Oficiales Subalternos"},
+  {num:8,  nombre:"DRAGO, Mario Cesar",                 sector:"Oficiales Subalternos"},
+  {num:9,  nombre:"QUIROGA, Carlos Gastón",             sector:"Oficiales Subalternos"},
+  {num:10, nombre:"SUCHY, Sergio Gustavo",              sector:"Oficiales Subalternos"},
+  {num:11, nombre:"MIGUEL, Angel Andrés",               sector:"Suboficiales Superiores"},
+  {num:12, nombre:"ESPINOSA, Norberto Felix",           sector:"Suboficiales Superiores"},
+  {num:13, nombre:"MARTINEZ, Miguel David",             sector:"Suboficiales Superiores"},
+  {num:14, nombre:"CAIRO, Emanuel Alejandro",           sector:"Suboficiales Superiores"},
+  {num:15, nombre:"BARDIN, Esteban Daniel",             sector:"Suboficiales Superiores"},
+  {num:16, nombre:"FIORINA, Alberto Alejandro",         sector:"Suboficiales Superiores"},
+  {num:17, nombre:"GONZALEZ R, Marcos Antonio",         sector:"Suboficiales Superiores"},
+  {num:18, nombre:"RIVON, Guillermo Adrián",            sector:"Suboficiales Superiores"},
+  {num:19, nombre:"ORQUEDA, Walter Omar",               sector:"Suboficiales Subalternos"},
+  {num:20, nombre:"DOMINICHINI, Osvaldo Lorenzo",       sector:"Suboficiales Subalternos"},
+  {num:21, nombre:"PAZANIN, Raiquén Nehuén",            sector:"Suboficiales Subalternos"},
+  {num:22, nombre:"MONTECCHIARI, Rubén Darío",          sector:"Suboficiales Subalternos"},
+  {num:23, nombre:"GALVÁN, Darío Damián",               sector:"Suboficiales Subalternos"},
+  {num:24, nombre:"PAVÓN, Alan",                        sector:"Suboficiales Subalternos"},
+  {num:25, nombre:"WERLE, Daniela Carolina",            sector:"Suboficiales Subalternos"},
+  {num:26, nombre:"BORACCHIA, Ignacio",                 sector:"Suboficiales Subalternos"},
+  {num:27, nombre:"AVALOS, Raúl Marcelo",               sector:"Suboficiales Subalternos"},
+  {num:28, nombre:"TRANELLI, Fernando José",            sector:"Suboficiales Subalternos"},
+  {num:29, nombre:"PELESZECH, Matías Juan",             sector:"Cabos 1°"},
+  {num:30, nombre:"ZAMBOTTI, Vanesa Alejandra",         sector:"Cabos 1°"},
+  {num:31, nombre:"VIEYRA, Diego Ricardo",              sector:"Cabos 1°"},
+  {num:32, nombre:"AVALOS, Noelia Paola",               sector:"Cabos 1°"},
+  {num:33, nombre:"PORRONI, Darío Germán",              sector:"Cabos 1°"},
+  {num:34, nombre:"TREZZA, Fernando",                   sector:"Cabos 1°"},
+  {num:35, nombre:"VILLALA, Diego Hernán",              sector:"Cabos 1°"},
+  {num:36, nombre:"LEGUIZAMÓN, Fernando Maximiliano",   sector:"Cabos 1°"},
+  {num:37, nombre:"PEREIRO, Darío Hernán",              sector:"Cabos 1°"},
+  {num:38, nombre:"CARDOSO, Pablo Miguel",              sector:"Cabos 1°"},
+  {num:39, nombre:"D'ANGELO, Cinthia Fabiana",          sector:"Cabos"},
+  {num:40, nombre:"AVALOS, Gustavo Damián",             sector:"Cabos"},
+  {num:41, nombre:"RUZO, Angel",                        sector:"Cabos"},
+  {num:42, nombre:"AVALOS, María de los Angeles",       sector:"Cabos"},
+  {num:43, nombre:"ARGUELLO, Jaqueline Elizabeth",      sector:"Cabos"},
+  {num:44, nombre:"QUEVEDO, Ananías David",             sector:"Cabos"},
+  {num:45, nombre:"GUZMAN, Luis Antonio",               sector:"Cabos"},
+  {num:46, nombre:"BARZOLA, Raúl",                      sector:"Cabos"},
+  {num:47, nombre:"MOREYRA, Ariel",                     sector:"Cabos"},
+  {num:48, nombre:"QUINTERO, Rocío del Pilar",          sector:"Cabos"},
+  {num:49, nombre:"STRAUSS, Hernán Diego",              sector:"Cabos"},
+  {num:50, nombre:"GALINDEZ, Santiago Daniel",          sector:"Cabos"},
+  {num:51, nombre:"CHEMES, Alan Alejandro",             sector:"Bomberos"},
+  {num:52, nombre:"AVOLA, Juan Marcelo",                sector:"Bomberos"},
+  {num:53, nombre:"GIANNUZZI, Alejandro Fabián",        sector:"Bomberos"},
+  {num:54, nombre:"TISSERA, Juan Pablo",                sector:"Bomberos"},
+  {num:55, nombre:"PONCE ROBLEDO, Florencia",           sector:"Bomberos"},
+  {num:56, nombre:"CAVOLI, Micaela Belén",              sector:"Bomberos"},
+  {num:57, nombre:"MAZA, Emanuel Gonzalo",              sector:"Bomberos"},
+  {num:58, nombre:"WIESENER, Thomás",                   sector:"Bomberos"},
+  {num:59, nombre:"DE CHIARA, Adrián Marcelo",          sector:"Bomberos"},
+  {num:60, nombre:"MARTINEZ, Ezequiel Esteban",         sector:"Bomberos"},
+  {num:61, nombre:"SALMERI, Diego Jesús",               sector:"Bomberos"},
+  {num:62, nombre:"CEPEDA, Juan Pablo",                 sector:"Bomberos"},
+  {num:63, nombre:"POCETTI, Tamara Fabiana",            sector:"Bomberos"},
+  {num:64, nombre:"GUERRERA, Paloma Quimey",            sector:"Bomberos"},
+  {num:65, nombre:"BUENO, Melody Kaiane",               sector:"Bomberos"},
+  {num:66, nombre:"RODRIGUEZ, Melisa",                  sector:"Bomberos"},
+  {num:67, nombre:"PEREIRAS, Candelaria Agustina",      sector:"Bomberos"},
+  {num:68, nombre:"ERUT, Adrián Rubén",                 sector:"Bomberos"},
+  {num:69, nombre:"BOSCH, Lucas Emanuel",               sector:"Bomberos"},
+  {num:70, nombre:"BRUZZO, Priscila Carla",             sector:"Bomberos"},
+  {num:71, nombre:"VIERA, Marina Noelia",               sector:"Bomberos"},
+  {num:72, nombre:"BELLOMO, Cristian Angel",            sector:"Bomberos"},
+  {num:73, nombre:"MÜLLER, Marcos Alejandro",           sector:"Bomberos"},
+  {num:74, nombre:"BORZ, Gabriela Elizabeth",           sector:"Bomberos"},
+  {num:75, nombre:"GOMEZ, Oriel Agustín",               sector:"Bomberos"},
+  {num:76, nombre:"BARNABA, María",                     sector:"Bomberos"},
+  {num:77, nombre:"ARANDA, Franco",                     sector:"Bomberos"},
+  {num:78, nombre:"REYNOSO, Aylen Agustina Araceli",    sector:"Bomberos"},
+  {num:79, nombre:"BRUZZO, Camila Nazarena",            sector:"Bomberos"},
+  {num:80, nombre:"RAMIREZ, Alejandro Hernán",          sector:"Bomberos"},
+  {num:81, nombre:"VELAZQUEZ, Maitena",                 sector:"Bomberos"},
+  {num:82, nombre:"CAMPOLO, Valentín",                  sector:"Bomberos"},
+  {num:83, nombre:"FERREÑO IBARRA, Antonella Belén",    sector:"Bomberos"},
+  {num:84, nombre:"PATELLI, Joaquín",                   sector:"Bomberos"},
+  {num:85, nombre:"PARODI, Evelin Elizabeth",           sector:"Bomberos"},
+  {num:86, nombre:"DI LORETO, Hernán",                  sector:"Bomberos"},
+  {num:87, nombre:"GALVAN, Lucas",                      sector:"Bomberos"},
+  {num:88, nombre:"ROLÓN, María Pía",                   sector:"Bomberos"},
+  {num:89, nombre:"DE GERONIMO, Abril Daniela",         sector:"Bomberos"},
+  {num:90, nombre:"GHIO, Brian Alejandro",              sector:"Bomberos"},
+  {num:91, nombre:"MIRANDA, Ana Marcela",               sector:"Bomberos"},
+  {num:92, nombre:"ROMERO, Sofía Allen",                sector:"Bomberos"},
+  {num:93, nombre:"AMARILLA, Natalí Soledad",           sector:"Bomberos"},
+  {num:94, nombre:"KEBERLEIN, Juan Marcelo",            sector:"Bomberos"},
+  {num:95, nombre:"SPORTELLI, Valentín",                sector:"Bomberos"},
+  {num:96, nombre:"BALDOVINO, Lucas Ezequiel",          sector:"Bomberos"},
+  {num:97, nombre:"BENITEZ, José Alejandro",            sector:"Bomberos"},
+  {num:98, nombre:"PASTORIVE, Constanza Zoe",           sector:"Bomberos"},
+  {num:99, nombre:"RAVANETTI, Guido",                   sector:"Bomberos"},
+  {num:100,nombre:"GONZALEZ PISANTE, Leandro Héctor",   sector:"Bomberos"},
+  {num:101,nombre:"VASTA GOMEZ, Valentín",              sector:"Bomberos"},
+  {num:102,nombre:"TEJERINA, Camila Brenda",            sector:"Bomberos"},
+  {num:103,nombre:"RIQUELME, Javier Ramón",             sector:"Bomberos"},
+  {num:104,nombre:"ALBERTI, Santino",                   sector:"Bomberos"},
+  {num:105,nombre:"GONZALEZ DRIGA, Ian",                sector:"Bomberos"},
+  {num:106,nombre:"RODRIGUEZ, Iván Alejandro",          sector:"Bomberos"},
+  {num:107,nombre:"GIGENA, Mara Regina",                sector:"Bomberos"},
+  {num:108,nombre:"MARCHETTA, Héctor",                  sector:"Otros"},
+  {num:109,nombre:"RODRIGUEZ, Matías",                  sector:"Otros"},
+  {num:110,nombre:"BARDIN, Miguel",                     sector:"Otros"},
+  {num:111,nombre:"CENTURION, Domingo",                 sector:"Otros"},
+  {num:112,nombre:"PEREZ, Osvaldo",                     sector:"Otros"},
+  {num:113,nombre:"BARDIN, Milena",                     sector:"Otros"},
+];
+
+// Normalize name for fuzzy matching
+function normName(s) {
+  return s.toUpperCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^A-Z0-9 ,]/g,'')
+    .trim();
+}
+
+// Find best match in padron for a given name string
+function findBestMatch(nombre) {
+  const query = normName(nombre);
+  let best = null, bestScore = -1;
+  for (const p of PADRON) {
+    const target = normName(p.nombre);
+    const score = similarity(query, target);
+    if (score > bestScore) { bestScore = score; best = p; }
+  }
+  return bestScore > 0.45 ? best : null;
+}
+
+function similarity(a, b) {
+  if (a === b) return 1;
+  // Token overlap
+  const ta = new Set(a.split(/\s+/));
+  const tb = new Set(b.split(/\s+/));
+  let common = 0;
+  for (const t of ta) if (tb.has(t)) common++;
+  return (2 * common) / (ta.size + tb.size);
+}
+
+// ============================================================
 let files = [];
-// Matrix: { bomberos: [{nombre}], partes: [{nro, fecha, actuaciones: {nombre: codigo}}] }
-let matrixData = null;
+let parteResults = []; // [{nro_parte, fecha, actuaciones: [{num, codigo}]}]
 
 const zone = document.getElementById('uploadZone');
 zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
@@ -122,8 +266,7 @@ zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
 zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
 
 function handleFiles(newFiles) { for (const f of newFiles) files.push(f); renderFileList(); document.getElementById('btnProcesar').disabled = files.length === 0; }
-function formatSize(b) { if (b < 1024) return b + ' B'; if (b < 1048576) return (b/1024).toFixed(1)+' KB'; return (b/1048576).toFixed(1)+' MB'; }
-
+function formatSize(b) { if (b < 1024) return b+' B'; if (b < 1048576) return (b/1024).toFixed(1)+' KB'; return (b/1048576).toFixed(1)+' MB'; }
 function renderFileList() {
   document.getElementById('fileList').innerHTML = files.map((f,i) => `
     <div class="file-item">
@@ -142,18 +285,37 @@ function normalizeType(file) {
   if (n.endsWith('.pdf')) return 'application/pdf';
   return 'image/jpeg';
 }
-
 async function toBase64(file) {
-  return new Promise((res,rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result.split(',')[1]);
-    r.onerror = () => rej(new Error('Error leyendo archivo'));
-    r.readAsDataURL(file);
-  });
+  return new Promise((res,rej) => { const r = new FileReader(); r.onload = () => res(r.result.split(',')[1]); r.onerror = () => rej(new Error('Error')); r.readAsDataURL(file); });
+}
+function setStatus(html, type) { document.getElementById('statusBox').innerHTML = html ? `<div class="status status-${type}">${html}</div>` : ''; }
+
+const PADRON_LISTA = PADRON.map(p => `${p.num}. ${p.nombre}`).join('\n');
+
+function buildPrompt() {
+  return `Sos un asistente especializado en leer partes de personal de bomberos voluntarios argentinos.
+
+Este es el PADRÓN OFICIAL con los números de cada bombero:
+${PADRON_LISTA}
+
+Del parte en la imagen, extraé en formato JSON puro sin backticks:
+{
+  "nro_parte": "string",
+  "fecha": "DD/MM/AAAA",
+  "actuaciones": [
+    {"num": 15, "codigo": 1}
+  ]
 }
 
-function setStatus(html, type) {
-  document.getElementById('statusBox').innerHTML = html ? `<div class="status status-${type}">${html}</div>` : '';
+Reglas:
+- Usá el NÚMERO del padrón oficial para identificar a cada bombero (campo "num")
+- codigo 1 = marca X (acudió a la intervención)
+- codigo 2 = marca • (estaba en la dependencia, no salió)
+- codigo 3 = marca G (guardia cuartelero)
+- Solo incluir quienes tienen marca visible. En blanco = no incluir.
+- Incluir la sección "Otros" (cuarteleros/telefonistas) usando sus números (108-113)
+
+Respondé SOLO con el JSON, sin texto extra.`;
 }
 
 async function callAPI(b64, mediaType, prompt) {
@@ -171,103 +333,53 @@ async function callAPI(b64, mediaType, prompt) {
       messages: [{ role: 'user', content: [contentBlock, { type: 'text', text: prompt }] }]
     })
   });
-
-  if (!res.ok) {
-    const err = await res.json().catch(()=>({}));
-    throw new Error(`API ${res.status}: ${err.error?.message||res.statusText}`);
-  }
+  if (!res.ok) { const err = await res.json().catch(()=>({})); throw new Error(`API ${res.status}: ${err.error?.message||res.statusText}`); }
   const data = await res.json();
   if (data.error) throw new Error(data.error.message);
   const raw = (data.content||[]).map(c=>c.text||'').join('').trim();
   const clean = raw.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
   try { return JSON.parse(clean); }
-  catch {
-    const m = clean.match(/\{[\s\S]*\}/);
-    if (m) return JSON.parse(m[0]);
-    throw new Error('No se pudo interpretar la respuesta JSON');
-  }
+  catch { const m = clean.match(/\{[\s\S]*\}/); if (m) return JSON.parse(m[0]); throw new Error('No se pudo interpretar la respuesta'); }
 }
-
-const PROMPT_PADRON = `Sos un asistente especializado en leer partes de personal de bomberos voluntarios argentinos.
-Del parte en la imagen, extraé DOS cosas en formato JSON puro sin backticks:
-
-{
-  "nro_parte": "string",
-  "fecha": "DD/MM/AAAA",
-  "padron": [
-    {"numero": 1, "nombre": "APELLIDO, Nombre"}
-  ],
-  "actuaciones": [
-    {"nombre": "APELLIDO, Nombre", "codigo": 1}
-  ]
-}
-
-Reglas para "padron": incluí TODOS los bomberos listados en el parte, en orden, con su número de lista (del 1 al fin). Incluí jefes, oficiales, suboficiales, cabos, bomberos y la sección "Otros" (cuarteleros/telefonistas).
-
-Reglas para "actuaciones": solo los que tienen marca:
-- codigo 1 = X (acudió a la intervención)
-- codigo 2 = • (estaba en la dependencia, no salió)
-- codigo 3 = G (guardia cuartelero)
-
-Respondé SOLO con el JSON, sin texto extra.`;
-
-const PROMPT_SOLO_ACTUACIONES = `Sos un asistente especializado en leer partes de personal de bomberos voluntarios argentinos.
-Del parte en la imagen, extraé en formato JSON puro sin backticks:
-
-{
-  "nro_parte": "string",
-  "fecha": "DD/MM/AAAA",
-  "actuaciones": [
-    {"nombre": "APELLIDO, Nombre", "codigo": 1}
-  ]
-}
-
-Reglas:
-- codigo 1 = X (acudió a la intervención)
-- codigo 2 = • (estaba en la dependencia, no salió)
-- codigo 3 = G (guardia cuartelero)
-- Solo incluir quienes tienen marca. En blanco = no incluir.
-
-Respondé SOLO con el JSON, sin texto extra.`;
 
 async function procesar() {
   const btn = document.getElementById('btnProcesar');
   btn.disabled = true;
-  matrixData = null;
+  parteResults = [];
   document.getElementById('previewBox').innerHTML = '';
   document.getElementById('errorsBox').innerHTML = '';
 
-  const results = [];
+  const prompt = buildPrompt();
   const errors = [];
-  let padron = null;
 
   for (let i = 0; i < files.length; i++) {
     const f = files[i];
     const pct = Math.round((i / files.length) * 100);
-    setStatus(`
-      <div class="spinner"></div>
-      <div style="flex:1;">
-        Procesando ${i+1} de ${files.length}: <strong>${f.name}</strong>
-        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-      </div>
-    `, 'loading');
+    setStatus(`<div class="spinner"></div><div style="flex:1;">Procesando ${i+1} de ${files.length}: <strong>${f.name}</strong><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div></div>`, 'loading');
 
     try {
       const b64 = await toBase64(f);
       const mediaType = normalizeType(f);
-      const prompt = (i === 0) ? PROMPT_PADRON : PROMPT_SOLO_ACTUACIONES;
       const parsed = await callAPI(b64, mediaType, prompt);
 
-      if (i === 0 && parsed.padron && parsed.padron.length > 0) {
-        padron = parsed.padron;
-      }
+      // Normalize: ensure all actuaciones have valid num
+      const actuaciones = (parsed.actuaciones || []).map(a => {
+        let num = parseInt(a.num);
+        if (!num || num < 1 || num > 113) {
+          // Try name fallback
+          if (a.nombre) {
+            const match = findBestMatch(a.nombre);
+            if (match) num = match.num;
+          }
+        }
+        return num >= 1 && num <= 113 ? { num, codigo: a.codigo } : null;
+      }).filter(Boolean);
 
-      results.push({
+      parteResults.push({
         nro_parte: parsed.nro_parte || `Parte ${i+1}`,
         fecha: parsed.fecha || '',
-        actuaciones: parsed.actuaciones || []
+        actuaciones
       });
-
     } catch(e) {
       errors.push({ filename: f.name, error: e.message });
     }
@@ -277,154 +389,120 @@ async function procesar() {
   btn.disabled = false;
 
   if (errors.length > 0) {
-    document.getElementById('errorsBox').innerHTML = errors.map(e => `
-      <div class="error-card">⚠️ <strong>${e.filename}</strong><div class="error-detail">${e.error}</div></div>
-    `).join('');
+    document.getElementById('errorsBox').innerHTML = errors.map(e =>
+      `<div class="error-card">⚠️ <strong>${e.filename}</strong><div class="error-detail">${e.error}</div></div>`
+    ).join('');
   }
 
-  if (results.length > 0 && padron) {
-    matrixData = { padron, partes: results };
-    renderPreview();
-  } else if (results.length > 0 && !padron) {
-    document.getElementById('errorsBox').innerHTML += `<div class="error-card">⚠️ No se pudo leer el padrón del primer parte. Intentá procesar nuevamente.</div>`;
-  }
-}
-
-function colKey(parte) {
-  return `${parte.nro_parte}__${parte.fecha}`;
+  if (parteResults.length > 0) renderPreview();
 }
 
 function renderPreview() {
-  if (!matrixData) return;
-  const { padron, partes } = matrixData;
-
-  // Build lookup: nombre -> codigo per parte
-  const lookup = {}; // lookup[nombre][colKey] = codigo
-  partes.forEach(p => {
-    const key = colKey(p);
-    (p.actuaciones || []).forEach(a => {
-      const nombre = a.nombre.toUpperCase().trim();
-      if (!lookup[nombre]) lookup[nombre] = {};
-      lookup[nombre][key] = a.codigo;
+  // Build matrix: matrix[numBombero][colIndex] = codigo
+  const matrix = {};
+  PADRON.forEach(p => { matrix[p.num] = {}; });
+  parteResults.forEach((parte, ci) => {
+    parte.actuaciones.forEach(a => {
+      if (matrix[a.num] !== undefined) matrix[a.num][ci] = a.codigo;
     });
   });
 
-  const colKeys = partes.map(colKey);
+  // Group by sector for visual separators
+  let lastSector = null;
+  let tbodyRows = '';
+  PADRON.forEach(p => {
+    if (p.sector !== lastSector) {
+      tbodyRows += `<tr class="sector-row"><td></td><td colspan="${parteResults.length + 1}">${p.sector}</td></tr>`;
+      lastSector = p.sector;
+    }
+    const celdas = parteResults.map((_, ci) => {
+      const val = matrix[p.num][ci] || 0;
+      const cls = val > 0 ? `v${val}` : 'v0';
+      return `<td style="text-align:center;"><select class="num-select ${cls}" data-num="${p.num}" data-col="${ci}" onchange="onSelectChange(this)">
+        <option value="0" ${val===0?'selected':''}>—</option>
+        <option value="1" ${val===1?'selected':''}>1</option>
+        <option value="2" ${val===2?'selected':''}>2</option>
+        <option value="3" ${val===3?'selected':''}>3</option>
+      </select></td>`;
+    }).join('');
+    tbodyRows += `<tr>
+      <td class="col-num">${p.num}</td>
+      <td class="col-nombre">${p.nombre}</td>
+      ${celdas}
+    </tr>`;
+  });
 
-  let html = `
+  const theadCols = parteResults.map(p =>
+    `<th>${p.nro_parte}<br><span style="font-weight:400;font-size:0.72rem;opacity:0.8;">${p.fecha}</span></th>`
+  ).join('');
+
+  document.getElementById('previewBox').innerHTML = `
     <div class="preview-section">
       <div class="preview-header">
         <div>
-          <div class="preview-title">Previsualización — ${padron.length} bomberos · ${partes.length} parte${partes.length>1?'s':''}</div>
-          <div class="preview-hint">Podés editar los nombres y cambiar los valores antes de exportar.</div>
+          <div class="preview-title">Previsualización — ${PADRON.length} bomberos · ${parteResults.length} parte${parteResults.length>1?'s':''}</div>
+          <div class="preview-hint">Podés cambiar los valores antes de exportar.</div>
         </div>
         <button class="btn-export" onclick="exportarExcel()">⬇ Exportar Excel</button>
       </div>
-
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:#2e7d32"></div> 1 = Salió a la intervención</div>
         <div class="legend-item"><div class="legend-dot" style="background:#f57f17"></div> 2 = En la dependencia</div>
         <div class="legend-item"><div class="legend-dot" style="background:#1565c0"></div> 3 = Guardia cuartelero</div>
         <div class="legend-item"><div class="legend-dot" style="background:#ccc"></div> vacío = no estaba</div>
       </div>
-
       <div class="table-wrap">
         <table id="matrixTable">
-          <thead>
-            <tr>
-              <th class="col-nombre">Bombero</th>
-              ${partes.map(p => `<th class="parte-col">${p.nro_parte}<br><span style="font-weight:400;font-size:0.72rem;opacity:0.8;">${p.fecha}</span></th>`).join('')}
-            </tr>
-          </thead>
-          <tbody>
-            ${padron.map((b, bi) => {
-              const nombreUpper = b.nombre.toUpperCase().trim();
-              const celdas = colKeys.map((ck, ci) => {
-                const val = lookup[nombreUpper] ? (lookup[nombreUpper][ck] || 0) : 0;
-                const cls = val > 0 ? `v${val}` : 'v0';
-                return `<td class="num-cell">
-                  <select class="num-select ${cls}" data-row="${bi}" data-col="${ci}" onchange="onSelectChange(this)">
-                    <option value="0" ${val===0?'selected':''}>—</option>
-                    <option value="1" ${val===1?'selected':''}>1</option>
-                    <option value="2" ${val===2?'selected':''}>2</option>
-                    <option value="3" ${val===3?'selected':''}>3</option>
-                  </select>
-                </td>`;
-              }).join('');
-              return `<tr>
-                <td class="col-nombre">
-                  <input class="nombre-input" type="text" value="${b.nombre}" data-row="${bi}" onchange="onNombreChange(this)">
-                </td>
-                ${celdas}
-              </tr>`;
-            }).join('')}
-          </tbody>
+          <thead><tr>
+            <th class="col-num">#</th>
+            <th class="col-nombre">Bombero</th>
+            ${theadCols}
+          </tr></thead>
+          <tbody>${tbodyRows}</tbody>
         </table>
       </div>
     </div>
   `;
-
-  document.getElementById('previewBox').innerHTML = html;
 }
 
 function onSelectChange(sel) {
   const val = parseInt(sel.value);
   sel.className = `num-select ${val > 0 ? 'v'+val : 'v0'}`;
-  const bi = parseInt(sel.dataset.row);
+  const num = parseInt(sel.dataset.num);
   const ci = parseInt(sel.dataset.col);
-  matrixData.partes[ci].actuaciones = matrixData.partes[ci].actuaciones || [];
-  const nombre = matrixData.padron[bi].nombre;
-  const nombreUpper = nombre.toUpperCase().trim();
-  const existing = matrixData.partes[ci].actuaciones.findIndex(a => a.nombre.toUpperCase().trim() === nombreUpper);
-  if (val === 0) {
-    if (existing >= 0) matrixData.partes[ci].actuaciones.splice(existing, 1);
-  } else {
-    if (existing >= 0) matrixData.partes[ci].actuaciones[existing].codigo = val;
-    else matrixData.partes[ci].actuaciones.push({ nombre, codigo: val });
-  }
-}
-
-function onNombreChange(input) {
-  const bi = parseInt(input.dataset.row);
-  matrixData.padron[bi].nombre = input.value;
+  const parte = parteResults[ci];
+  const idx = parte.actuaciones.findIndex(a => a.num === num);
+  if (val === 0) { if (idx >= 0) parte.actuaciones.splice(idx, 1); }
+  else { if (idx >= 0) parte.actuaciones[idx].codigo = val; else parte.actuaciones.push({ num, codigo: val }); }
 }
 
 function exportarExcel() {
-  if (!matrixData) return;
-  const { padron, partes } = matrixData;
-
-  // Headers
-  const headers = ['Bombero', ...partes.map(p => `${p.nro_parte} — ${p.fecha}`)];
-
-  // Lookup from current DOM selects
+  const headers = ['#', 'Bombero', ...parteResults.map(p => `${p.nro_parte} — ${p.fecha}`)];
   const table = document.getElementById('matrixTable');
-  const rows = table.querySelectorAll('tbody tr');
+  const rows = table.querySelectorAll('tbody tr:not(.sector-row)');
 
   let xml = `<?xml version="1.0"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><Worksheet ss:Name="Personal Actuante"><Table>`;
-
-  // Header row
   xml += '<Row>' + headers.map(h => `<Cell><Data ss:Type="String">${esc(h)}</Data></Cell>`).join('') + '</Row>';
 
-  // Data rows
-  rows.forEach((tr, bi) => {
-    const nombreInput = tr.querySelector('.nombre-input');
-    const nombre = nombreInput ? nombreInput.value : padron[bi].nombre;
+  rows.forEach(tr => {
+    const num = tr.querySelector('td.col-num') ? tr.querySelector('td.col-num').textContent.trim() : '';
+    const nombre = tr.querySelector('td.col-nombre') ? tr.querySelector('td.col-nombre').textContent.trim() : '';
     const selects = tr.querySelectorAll('.num-select');
     xml += '<Row>';
+    xml += `<Cell><Data ss:Type="String">${esc(num)}</Data></Cell>`;
     xml += `<Cell><Data ss:Type="String">${esc(nombre)}</Data></Cell>`;
     selects.forEach(sel => {
       const v = parseInt(sel.value);
-      if (v > 0) xml += `<Cell><Data ss:Type="Number">${v}</Data></Cell>`;
-      else xml += `<Cell><Data ss:Type="String"></Data></Cell>`;
+      xml += v > 0
+        ? `<Cell><Data ss:Type="Number">${v}</Data></Cell>`
+        : `<Cell><Data ss:Type="String"></Data></Cell>`;
     });
     xml += '</Row>';
   });
 
   xml += '</Table></Worksheet></Workbook>';
-
-  const blob = new Blob([xml], { type: 'application/vnd.ms-excel' });
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
+  a.href = URL.createObjectURL(new Blob([xml], { type: 'application/vnd.ms-excel' }));
   a.download = 'personal_actuante.xls';
   a.click();
 }

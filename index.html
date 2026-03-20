@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -295,27 +296,32 @@ const PADRON_LISTA = PADRON.map(p => `${p.num}. ${p.nombre}`).join('\n');
 function buildPrompt() {
   return `Sos un asistente especializado en leer partes de personal de bomberos voluntarios argentinos.
 
-Este es el PADRÓN OFICIAL con los números de cada bombero:
-${PADRON_LISTA}
+El parte tiene una lista numerada de personal (del 1 al 107 aproximadamente) y una sección "Otros" al final. Cada fila tiene un número de orden visible a la izquierda del nombre.
 
-Del parte en la imagen, extraé en formato JSON puro sin backticks:
+A la derecha de cada nombre hay columnas donde se marcan:
+- X = acudió a la intervención → codigo 1
+- • (punto negro) = presente en el cuartel pero no salió → codigo 2
+- G = guardia cuartelero → codigo 3
+- — (línea recta o celda vacía) = no estaba en el cuartel → NO incluir
+
+IMPORTANTE: Solo incluí filas con X, • o G. Las que tienen línea recta o están vacías NO se incluyen.
+
+Para la sección "Otros" (cuarteleros/telefonistas al final del parte), usá estos números:
+- Cuartelero 1 → num 108
+- Cuartelero 2 → num 109
+- Cuartelero 3 → num 110
+- Cuartelero 4 → num 111
+- Cuartelero 5 → num 112
+- Telefonista 6 → num 113
+
+Respondé SOLO con este JSON, sin texto extra ni backticks:
 {
   "nro_parte": "string",
   "fecha": "DD/MM/AAAA",
   "actuaciones": [
     {"num": 15, "codigo": 1}
   ]
-}
-
-Reglas:
-- Usá el NÚMERO del padrón oficial para identificar a cada bombero (campo "num")
-- codigo 1 = marca X (acudió a la intervención)
-- codigo 2 = marca • (estaba en la dependencia, no salió)
-- codigo 3 = marca G (guardia cuartelero)
-- Solo incluir quienes tienen marca visible. En blanco = no incluir.
-- Incluir la sección "Otros" (cuarteleros/telefonistas) usando sus números (108-113)
-
-Respondé SOLO con el JSON, sin texto extra.`;
+}`;
 }
 
 async function callAPI(b64, mediaType, prompt) {

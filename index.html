@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -73,6 +72,18 @@
     .legend-item { display: flex; align-items: center; gap: 6px; }
     .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
     .error-card { background: var(--rojo-light); border-radius: 8px; padding: 10px 14px; font-size: 0.85rem; color: var(--rojo-dark); margin-top: 1rem; }
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0 0; }
+    .toggle-label { font-size: 0.875rem; font-weight: 500; color: var(--text); }
+    .toggle-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+    .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; cursor: pointer; inset: 0; background: var(--gris-mid); border-radius: 999px; transition: background 0.2s; }
+    .toggle-slider:before { content: ""; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: transform 0.2s; }
+    .toggle-switch input:checked + .toggle-slider { background: var(--rojo); }
+    .toggle-switch input:checked + .toggle-slider:before { transform: translateX(20px); }
+    .conflict { background: #fff8e1 !important; }
+    .conflict .num-select { border-color: #f57f17 !important; background: #fff8e1 !important; }
+    .conflict-badge { font-size: 0.7rem; color: #f57f17; font-weight: 600; margin-left: 4px; }
     .error-detail { font-size: 0.75rem; opacity: 0.8; margin-top: 3px; }
     .sector-row td { background: #eef2f7 !important; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); padding: 4px 10px; }
   </style>
@@ -96,6 +107,16 @@
       <div class="upload-sub">JPG, PNG, PDF — podés subir varios a la vez</div>
     </div>
     <div class="file-list" id="fileList"></div>
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-label">Doble verificación</div>
+        <div class="toggle-sub">Procesa cada parte dos veces y marca los conflictos en amarillo</div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="toggleDoble">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
   </div>
 
   <button class="btn-procesar" id="btnProcesar" onclick="procesar()" disabled>
@@ -296,30 +317,48 @@ const PADRON_LISTA = PADRON.map(p => `${p.num}. ${p.nombre}`).join('\n');
 function buildPrompt() {
   return `Sos un asistente especializado en leer partes de personal de bomberos voluntarios argentinos.
 
-El parte tiene una lista numerada de personal (del 1 al 107 aproximadamente) y una sección "Otros" al final. Cada fila tiene un número de orden visible a la izquierda del nombre.
+NÚMERO DE PARTE:
+- El campo "Parte de Intervención Nro." tiene SIEMPRE el formato: 5 dígitos / 1 o 2 dígitos (ej: 21917/1, 21917/14)
+- El número de 5 dígitos es el identificador del día. La segunda parte es el número de intervención del día.
+- Copialo exactamente como aparece, unido con barra sin espacios: "21917/1"
 
-A la derecha de cada nombre hay columnas donde se marcan:
+FECHA:
+- Formato DD/MM/AAAA. Leé día, mes y año completos.
+
+MARCAS DE ACTUACIÓN — mirá con atención la columna a la derecha de cada nombre:
 - X = acudió a la intervención → codigo 1
-- • (punto negro) = presente en el cuartel pero no salió → codigo 2
+- • (punto negro/círculo) = presente en el cuartel pero no salió → codigo 2
 - G = guardia cuartelero → codigo 3
-- — (línea recta o celda vacía) = no estaba en el cuartel → NO incluir
+- — (línea recta) o celda vacía = no estaba en el cuartel → NO incluir
 
-IMPORTANTE: Solo incluí filas con X, • o G. Las que tienen línea recta o están vacías NO se incluyen.
+REGLAS IMPORTANTES:
+1. Si una fila tiene G, el código es SIEMPRE 3, aunque también tenga un punto (•). La G tiene prioridad absoluta.
+2. Revisá TODAS las filas sin excepción, de la 1 a la 107, más la sección "Otros". Es fácil saltarse filas en la zona de Cabos (filas 39-50).
+3. Solo incluí filas con X, • o G. Línea recta o vacío = NO incluir.
 
-Para la sección "Otros" (cuarteleros/telefonistas al final del parte), usá estos números:
-- Cuartelero 1 → num 108
-- Cuartelero 2 → num 109
-- Cuartelero 3 → num 110
-- Cuartelero 4 → num 111
-- Cuartelero 5 → num 112
-- Telefonista 6 → num 113
+EJEMPLO CORRECTO:
+- Fila tiene • y G → codigo 3 (G tiene prioridad)
+- Fila tiene solo • → codigo 2
+- Fila tiene solo X → codigo 1
+- Fila tiene solo G → codigo 3
+- Fila tiene — o vacío → NO incluir
+
+Sección "Otros" al final del parte:
+- Cuartelero fila 1 → num 108
+- Cuartelero fila 2 → num 109
+- Cuartelero fila 3 → num 110
+- Cuartelero fila 4 → num 111
+- Cuartelero fila 5 → num 112
+- Telefonista fila 6 → num 113
 
 Respondé SOLO con este JSON, sin texto extra ni backticks:
 {
-  "nro_parte": "string",
-  "fecha": "DD/MM/AAAA",
+  "nro_parte": "21917/1",
+  "fecha": "25/03/2026",
   "actuaciones": [
-    {"num": 15, "codigo": 1}
+    {"num": 34, "codigo": 1},
+    {"num": 1, "codigo": 2},
+    {"num": 31, "codigo": 3}
   ]
 }`;
 }
@@ -348,8 +387,40 @@ async function callAPI(b64, mediaType, prompt) {
   catch { const m = clean.match(/\{[\s\S]*\}/); if (m) return JSON.parse(m[0]); throw new Error('No se pudo interpretar la respuesta'); }
 }
 
+function normalizeActuaciones(parsed, idx) {
+  return (parsed.actuaciones || []).map(a => {
+    let num = parseInt(a.num);
+    if (!num || num < 1 || num > 113) {
+      if (a.nombre) { const match = findBestMatch(a.nombre); if (match) num = match.num; }
+    }
+    return num >= 1 && num <= 113 ? { num, codigo: a.codigo } : null;
+  }).filter(Boolean);
+}
+
+function mergeActuaciones(actA, actB) {
+  // Returns merged actuaciones with conflict flag
+  const mapA = {}, mapB = {};
+  actA.forEach(a => mapA[a.num] = a.codigo);
+  actB.forEach(a => mapB[a.num] = a.codigo);
+  const allNums = new Set([...Object.keys(mapA), ...Object.keys(mapB)].map(Number));
+  const merged = [];
+  for (const num of allNums) {
+    const cA = mapA[num] || 0;
+    const cB = mapB[num] || 0;
+    if (cA === cB && cA > 0) {
+      merged.push({ num, codigo: cA, conflict: false });
+    } else if (cA !== cB) {
+      // Conflict: use the non-zero one if only one has value, else mark conflict
+      const codigo = cA > 0 ? cA : cB;
+      merged.push({ num, codigo, conflict: true, cA, cB });
+    }
+  }
+  return merged;
+}
+
 async function procesar() {
   const btn = document.getElementById('btnProcesar');
+  const doble = document.getElementById('toggleDoble').checked;
   btn.disabled = true;
   parteResults = [];
   document.getElementById('previewBox').innerHTML = '';
@@ -357,34 +428,43 @@ async function procesar() {
 
   const prompt = buildPrompt();
   const errors = [];
+  const totalSteps = files.length * (doble ? 2 : 1);
+  let step = 0;
 
   for (let i = 0; i < files.length; i++) {
     const f = files[i];
-    const pct = Math.round((i / files.length) * 100);
-    setStatus(`<div class="spinner"></div><div style="flex:1;">Procesando ${i+1} de ${files.length}: <strong>${f.name}</strong><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div></div>`, 'loading');
 
     try {
       const b64 = await toBase64(f);
       const mediaType = normalizeType(f);
-      const parsed = await callAPI(b64, mediaType, prompt);
 
-      // Normalize: ensure all actuaciones have valid num
-      const actuaciones = (parsed.actuaciones || []).map(a => {
-        let num = parseInt(a.num);
-        if (!num || num < 1 || num > 113) {
-          // Try name fallback
-          if (a.nombre) {
-            const match = findBestMatch(a.nombre);
-            if (match) num = match.num;
-          }
-        }
-        return num >= 1 && num <= 113 ? { num, codigo: a.codigo } : null;
-      }).filter(Boolean);
+      // Primera lectura
+      step++;
+      const pct1 = Math.round((step / totalSteps) * 100);
+      setStatus(`<div class="spinner"></div><div style="flex:1;">${doble ? 'Lectura 1/2 — ' : ''}Procesando ${i+1} de ${files.length}: <strong>${f.name}</strong><div class="progress-bar"><div class="progress-fill" style="width:${pct1}%"></div></div></div>`, 'loading');
+      const parsed1 = await callAPI(b64, mediaType, prompt);
+      const act1 = normalizeActuaciones(parsed1, i);
+
+      let actuaciones, conflictos = 0;
+
+      if (doble) {
+        // Segunda lectura
+        step++;
+        const pct2 = Math.round((step / totalSteps) * 100);
+        setStatus(`<div class="spinner"></div><div style="flex:1;">Lectura 2/2 — Procesando ${i+1} de ${files.length}: <strong>${f.name}</strong><div class="progress-bar"><div class="progress-fill" style="width:${pct2}%"></div></div></div>`, 'loading');
+        const parsed2 = await callAPI(b64, mediaType, prompt);
+        const act2 = normalizeActuaciones(parsed2, i);
+        actuaciones = mergeActuaciones(act1, act2);
+        conflictos = actuaciones.filter(a => a.conflict).length;
+      } else {
+        actuaciones = act1.map(a => ({ ...a, conflict: false }));
+      }
 
       parteResults.push({
-        nro_parte: parsed.nro_parte || `Parte ${i+1}`,
-        fecha: parsed.fecha || '',
-        actuaciones
+        nro_parte: parsed1.nro_parte || `Parte ${i+1}`,
+        fecha: parsed1.fecha || '',
+        actuaciones,
+        conflictos
       });
     } catch(e) {
       errors.push({ filename: f.name, error: e.message });
@@ -409,7 +489,7 @@ function renderPreview() {
   PADRON.forEach(p => { matrix[p.num] = {}; });
   parteResults.forEach((parte, ci) => {
     parte.actuaciones.forEach(a => {
-      if (matrix[a.num] !== undefined) matrix[a.num][ci] = a.codigo;
+      if (matrix[a.num] !== undefined) matrix[a.num][ci] = a;
     });
   });
 
@@ -446,7 +526,7 @@ function renderPreview() {
     <div class="preview-section">
       <div class="preview-header">
         <div>
-          <div class="preview-title">Previsualización — ${PADRON.length} bomberos · ${parteResults.length} parte${parteResults.length>1?'s':''}</div>
+          <div class="preview-title">Previsualización — ${PADRON.length} bomberos · ${parteResults.length} parte${parteResults.length>1?'s':''}${parteResults.some(p=>p.conflictos>0) ? ' · <span style="color:#f57f17">⚠️ ' + parteResults.reduce((s,p)=>s+(p.conflictos||0),0) + ' celdas a revisar</span>' : ''}</div>
           <div class="preview-hint">Podés cambiar los valores antes de exportar.</div>
         </div>
         <button class="btn-export" onclick="exportarExcel()">⬇ Exportar Excel</button>
